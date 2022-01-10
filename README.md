@@ -7,6 +7,8 @@ This repository contain example for (simple) bootstrap on KoinWork existing stac
 
 These libraries (at least two of them, Bivrost & Heimdal) are main dependencies if you want to boot a service. 
 
+You also need to read [this doc](https://koinworks.atlassian.net/wiki/spaces/~433672050/pages/1128301127/Platform+-+Introducing+Bivrost) on creating service with Bivrost
+
 ## Observe The Code
 
 Before you run this example, please observe the sample code. There are several steps you need to do to boot service using Bivrost x Heimdal
