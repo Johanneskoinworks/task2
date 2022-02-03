@@ -4,7 +4,14 @@ LABEL maintainer="tonny.adhi@koinworks.com"
 ENV GO111MODULE=on
 
 ENV GOPRIVATE=github.com/koinworks
-RUN echo "machine github.com login [$GITHUB_USERNAME] password [$GITHUB_ACCESS_TOKEN]" >  ~/.netrc
+
+ARG GITHUB_USERNAME
+ARG GITHUB_ACCESS_TOKEN
+
+ENV GITHUB_USERNAME=${GITHUB_USERNAME}
+ENV GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
+
+RUN echo "machine github.com login $GITHUB_USERNAME password $GITHUB_ACCESS_TOKEN" >  ~/.netrc
 
 ENV APP asgard-example-service
 
