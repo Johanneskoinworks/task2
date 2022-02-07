@@ -42,14 +42,19 @@ services:
     build:
        context: .
        dockerfile: Dockerfile
+       args:
+         GITHUB_USERNAME: ${GITHUB_USERNAME}
+         GITHUB_ACCESS_TOKEN: ${GITHUB_ACCESS_TOKEN}
     image: asgard-service-example
     working_dir: /app
+    environment:
+      - REDIS_ADDR=${REDIS_ADDR}
     networks:
       vpcbr:
         ipv4_address: 10.5.0.4
     depends_on:
       - "redis"
-
+      - "asgard-bivrost"
 volumes:
   redis_data:
     driver: local

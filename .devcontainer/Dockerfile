@@ -16,7 +16,8 @@ ARG GITHUB_ACCESS_TOKEN
 ENV GITHUB_USERNAME=${GITHUB_USERNAME}
 ENV GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
 
-RUN echo "machine github.com login $GITHUB_USERNAME password $GITHUB_ACCESS_TOKEN" >  ~/.netrc
+RUN echo "Inside vscode"
+RUN echo "machine github.com login $GITHUB_USERNAME password $GITHUB_ACCESS_TOKEN" | tee  ~/.netrc
 
 ENV APP asgard-example-service
 
@@ -28,7 +29,11 @@ RUN go mod download
 COPY main.go ./
 COPY .env ./
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /out/${APP} main.go
+# RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /app/${APP} main.go
+
+
+# COPY  /.env /app/
+
 
 EXPOSE ${PORT}
-ENTRYPOINT ["/app/asgard-example-service"]
+#ENTRYPOINT ["/app/asgard-example-service"]
