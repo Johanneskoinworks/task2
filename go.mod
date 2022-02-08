@@ -4,8 +4,8 @@ go 1.17
 
 require (
 	github.com/joho/godotenv v1.3.0
-	github.com/koinworks/asgard-bivrost v1.3.2
-	github.com/koinworks/asgard-heimdal v1.3.58-staging
+	github.com/koinworks/asgard-bivrost v1.3.3
+	github.com/koinworks/asgard-heimdal v1.4.0
 )
 
 require (

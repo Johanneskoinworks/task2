@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -8,6 +9,7 @@ import (
 
 	"github.com/koinworks/asgard-bivrost/libs"
 	bv "github.com/koinworks/asgard-bivrost/service"
+	"github.com/koinworks/asgard-heimdal/libs/serror"
 	hmodels "github.com/koinworks/asgard-heimdal/models"
 
 	"github.com/joho/godotenv"
@@ -54,13 +56,22 @@ func main() {
 		"/ping",
 	)
 
-	bivrostSvc.Get("/", pingHandler)
+	bivrostSvc.Get("/", bivrostSvc.WithMiddleware(pingHandler, exampleMiddleware))
+	bivrostSvc.Get("/ping-error", pingHandlerWithError)
 
 	err = server.Start()
 	if err != nil {
 		panic(err)
 	}
 
+}
+
+func exampleMiddleware(next bv.HandlerFunc) bv.HandlerFunc {
+	return func(ctx *bv.Context) bv.Result {
+		log.Println("This is some middleware")
+		ctx.SetHeader("X-Middleware", "Message From Middleware")
+		return next(ctx)
+	}
 }
 
 func pingHandler(ctx *bv.Context) bv.Result {
@@ -72,4 +83,28 @@ func pingHandler(ctx *bv.Context) bv.Result {
 		},
 	})
 
+}
+
+func pingHandlerWithError(ctx *bv.Context) bv.Result {
+	err := raiseError(1)
+	if err != nil {
+		ctx.CaptureSErrors(serror.NewFromErrorc(err, "[asgard-service-example][bivrost] error raised on handler"))
+		return ctx.JSONResponse(http.StatusServiceUnavailable, bv.ResponseBody{
+			Message: map[string]string{
+				"en": "Ping API raised an error",
+				"id": "Ping API mengalami kegagalan",
+			},
+		})
+	}
+
+	return ctx.JSONResponse(http.StatusOK, bv.ResponseBody{
+		Message: map[string]string{
+			"en": "Ping API successfully invoked",
+			"id": "Ping API berhasil dipanggil",
+		},
+	})
+}
+
+func raiseError(errorCode int) error {
+	return fmt.Errorf("error number: %d", errorCode)
 }

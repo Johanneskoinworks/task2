@@ -145,8 +145,13 @@ github.com/klauspost/compress v1.9.0/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0
 github.com/klauspost/cpuid v1.2.1/go.mod h1:Pj4uuM528wm8OyEC2QMXAi2YiTZ96dNQPGgoMS4s3ek=
 github.com/koinworks/asgard-bivrost v1.3.2 h1:9zo7CE3Jfc2NM1WmxGhCNGxQzIFDcPcAZS1M4LTbGC8=
 github.com/koinworks/asgard-bivrost v1.3.2/go.mod h1:9+SB9hwcTAdCX72NXGK8mTuGfgttUTvOdKA/P569rTs=
+github.com/koinworks/asgard-bivrost v1.3.3 h1:A8UJy4/fTzm/q9T9zNGMFbJQgDradKJpg5OlB+dj8rU=
+github.com/koinworks/asgard-bivrost v1.3.3/go.mod h1:yuI1qWb1OAPy1apsGLHSuQWq6jZDyKNmclqfQ4sAR4U=
 github.com/koinworks/asgard-heimdal v1.3.58-staging h1:WzAz5LlvyxEFBBt0eO8PctNp/J3IGqz2naAwb6DmFLg=
 github.com/koinworks/asgard-heimdal v1.3.58-staging/go.mod h1:FPzTBC9fI+sabS3WdNN1k2dObZf18E1NpWpSS2Iz8k0=
+github.com/koinworks/asgard-heimdal v1.3.86-staging/go.mod h1:FPzTBC9fI+sabS3WdNN1k2dObZf18E1NpWpSS2Iz8k0=
+github.com/koinworks/asgard-heimdal v1.4.0 h1:OQVR7ym18eG+0VOpJvFqPSFjJeO8wXAfrq3HBg6zlD4=
+github.com/koinworks/asgard-heimdal v1.4.0/go.mod h1:FPzTBC9fI+sabS3WdNN1k2dObZf18E1NpWpSS2Iz8k0=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
