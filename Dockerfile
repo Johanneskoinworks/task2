@@ -11,7 +11,7 @@ ARG GITHUB_ACCESS_TOKEN
 ENV GITHUB_USERNAME=${GITHUB_USERNAME}
 ENV GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
 
-RUN echo "machine github.com login username $GITHUB_USERNAME password $GITHUB_ACCESS_TOKEN" | tee  ~/.netrc
+RUN echo "machine github.com login $GITHUB_USERNAME password $GITHUB_ACCESS_TOKEN" | tee  ~/.netrc
 
 ENV APP asgard-example-service
 

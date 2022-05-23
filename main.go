@@ -23,7 +23,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(hostname)
 
 	portNumber, _ := strconv.Atoi(os.Getenv("APP_PORT"))
 

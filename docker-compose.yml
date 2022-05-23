@@ -40,18 +40,15 @@ services:
       - "redis"
   asgard-service-example:
     build:
-       context: $GOPATH/src/service-asgard-task2
-       dockerfile: $GOPATH/src/service-asgard-task2/Dockerfile
+       context: .
+       dockerfile: Dockerfile
        args:
          GITHUB_USERNAME: ${GITHUB_USERNAME}
          GITHUB_ACCESS_TOKEN: ${GITHUB_ACCESS_TOKEN}
     image: asgard-service-example
     working_dir: /app
     environment:
-    - APP_REGISTRY_ADDR=redis:6379
-    - APP_REGISTRY_PASSWORD=
-    - APP_PORT=9000
-    - REDIS_ADDR=${REDIS_ADDR}
+      - REDIS_ADDR=${REDIS_ADDR}
     networks:
       vpcbr:
         ipv4_address: 10.5.0.4
