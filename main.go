@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"task2/controller"
+	"task2/database"
 
 	"github.com/koinworks/asgard-bivrost/libs"
 	bv "github.com/koinworks/asgard-bivrost/service"
@@ -15,14 +17,17 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
-
-	hostname, _ := os.Hostname()
-
+func init() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	database.Start(os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"), "5432")
+}
+func main() {
+
+	hostname, _ := os.Hostname()
 
 	portNumber, _ := strconv.Atoi(os.Getenv("APP_PORT"))
 
@@ -53,10 +58,13 @@ func main() {
 	}
 
 	bivrostSvc := server.AsGatewayService(
-		"/ping",
+		"/v1",
 	)
 
-	bivrostSvc.Get("/", bivrostSvc.WithMiddleware(pingHandler, exampleMiddleware))
+	bivrostSvc.Get("/list", bivrostSvc.WithMiddleware(controller.PingHandlerList, listMiddleware))
+	bivrostSvc.Post("/list", bivrostSvc.WithMiddleware(controller.PingHandlerCreateProduct, createProductMiddleware))
+	bivrostSvc.Post("/createorder", bivrostSvc.WithMiddleware(controller.PingHandlerCreateOrder, createProductMiddleware))
+	bivrostSvc.Get("/orders", bivrostSvc.WithMiddleware(controller.PingHandlerOrder, OrdersListMiddleware))
 	bivrostSvc.Get("/ping-error", pingHandlerWithError)
 
 	err = server.Start()
@@ -66,23 +74,33 @@ func main() {
 
 }
 
-func exampleMiddleware(next bv.HandlerFunc) bv.HandlerFunc {
+func listMiddleware(next bv.HandlerFunc) bv.HandlerFunc {
 	return func(ctx *bv.Context) bv.Result {
 		log.Println("This is some middleware")
 		ctx.SetHeader("X-Middleware", "Message From Middleware")
 		return next(ctx)
 	}
 }
-
-func pingHandler(ctx *bv.Context) bv.Result {
-
-	return ctx.JSONResponse(http.StatusOK, bv.ResponseBody{
-		Message: map[string]string{
-			"en": "Welcome to Ping API",
-			"id": "Selamat datang di Ping API",
-		},
-	})
-
+func createProductMiddleware(next bv.HandlerFunc) bv.HandlerFunc {
+	return func(ctx *bv.Context) bv.Result {
+		log.Println("This is some middleware")
+		ctx.SetHeader("X-Middleware", "Message From Middleware")
+		return next(ctx)
+	}
+}
+func OrdersListMiddleware(next bv.HandlerFunc) bv.HandlerFunc {
+	return func(ctx *bv.Context) bv.Result {
+		log.Println("This is some middleware")
+		ctx.SetHeader("X-Middleware", "Message From Middleware")
+		return next(ctx)
+	}
+}
+func createOrderMiddleware(next bv.HandlerFunc) bv.HandlerFunc {
+	return func(ctx *bv.Context) bv.Result {
+		log.Println("This is some middleware")
+		ctx.SetHeader("X-Middleware", "Message From Middleware")
+		return next(ctx)
+	}
 }
 
 func pingHandlerWithError(ctx *bv.Context) bv.Result {
@@ -91,16 +109,16 @@ func pingHandlerWithError(ctx *bv.Context) bv.Result {
 		ctx.CaptureSErrors(serror.NewFromErrorc(err, "[asgard-service-example][bivrost] error raised on handler"))
 		return ctx.JSONResponse(http.StatusServiceUnavailable, bv.ResponseBody{
 			Message: map[string]string{
-				"en": "Ping API raised an error",
-				"id": "Ping API mengalami kegagalan",
+				"en": "Ping API raised an errssor",
+				"id": "Ping API mengalami kegassgalan",
 			},
 		})
 	}
 
 	return ctx.JSONResponse(http.StatusOK, bv.ResponseBody{
 		Message: map[string]string{
-			"en": "Ping API successfully invoked",
-			"id": "Ping API berhasil dipanggil",
+			"en": "Ping API successfully invossked",
+			"id": "Ping API berhasil dipanssggil",
 		},
 	})
 }

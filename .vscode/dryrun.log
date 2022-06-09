@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/zeo/Documents/task2'
+docker build -t asgard-service-example . --build-arg GITHUB_USERNAME=Johanneskoinworks --build-arg GITHUB_ACCESS_TOKEN=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
+make: Leaving directory '/home/zeo/Documents/task2'
+ 

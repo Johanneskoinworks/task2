@@ -25,8 +25,8 @@ services:
         ipv4_address: 10.5.0.2
   asgard-bivrost:
     build:
-      context: $GOPATH/src/asgard-bivrost
-      dockerfile: $GOPATH/src/asgard-bivrost/Dockerfile
+      context: /usr/local/go/src/asgard-bivrost
+      dockerfile: /usr/local/go/src/asgard-bivrost/Dockerfile
     image: asgard-bivrost
     working_dir: /app
     environment:
@@ -55,6 +55,42 @@ services:
     depends_on:
       - "redis"
       - "asgard-bivrost"
+  
+  fullstack-postgres:
+    image: postgres:latest
+    container_name: full_db_postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}  
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST} 
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.5
+    
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    depends_on:
+      - fullstack-postgres
+    ports:
+      - "5050:80"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.6
+    restart: unless-stopped
+
 volumes:
+  api:
+  pg_data:
+
   redis_data:
     driver: local
+  
